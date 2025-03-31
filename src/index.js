@@ -32,7 +32,7 @@ app.post("/webhook-handler", async (req, res, next) => {
 
     console.log("Webhook Received:", req.body);
 
-    if (req.body.event === "payment.captured" && req.body.payload.payment.entity.amount === 10300) {
+    if (req.body.event === "payment.captured" && req.body.payload.payment.entity.amount == 200) {
       const paymentDetails = req.body.payload.payment.entity;
       const updatedAmount = paymentDetails.amount / 100;
       const details = {
