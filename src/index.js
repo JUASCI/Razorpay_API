@@ -63,10 +63,10 @@ app.get("/get-info/:paymentId", async (req, res, next) => {
     const response = await Payment.find({ id: paymentId, amount: 103 });
 
     if (!response.length) {
-      return res.status(404).send("Payment is NOT done");
+      return res.status(404).json({ message: "Payment NOT done" });
     }
 
-    res.status(200).send("Payment Successful");
+    res.status(200).json({ paymentDetails: response[0] });
   } catch (err) {
     next(err); // Pass error to middleware
   }
