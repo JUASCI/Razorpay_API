@@ -32,7 +32,7 @@ app.post("/webhook-handler", async (req, res, next) => {
 
     console.log("Webhook Received:", req.body);
 
-    if (req.body.event === "payment.captured" && req.body.payload.payment.entity.amount == 200) {
+    if (req.body.event === "payment.captured") {
       const paymentDetails = req.body.payload.payment.entity;
       const updatedAmount = paymentDetails.amount / 100;
       const details = {
@@ -46,9 +46,14 @@ app.post("/webhook-handler", async (req, res, next) => {
         contact: paymentDetails.contact,
       };
 
-      const data = new Payment(details);
-      await data.save();
-      console.log("Payment Captured:", paymentDetails);
+      if(updatedAmount == 103){
+        const data = new Payment(details);
+        await data.save();
+        console.log("Payment Captured:", paymentDetails);
+      }
+      else{
+        throw new Error("Not for Zorrro");
+      }
     }
 
     res.status(200).send("Payment Received Successfully");
